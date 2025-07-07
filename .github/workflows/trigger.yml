@@ -1,0 +1,26 @@
+name: Trigger Dify Workflow
+on:
+  schedule:
+    - cron: '0 9 * * *'  # 每天上午9点执行（UTC时间=北京时间+8）
+jobs:
+  run-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Dify
+        run: |
+          curl -X POST "https://api.dify.ai/v1/workflows/run" \
+            -H "Authorization: Bearer ${{ secrets.DIFY_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "workflow_id": "${{ secrets.WORKFLOW_ID }}",
+              "inputs": {
+                 "board_id": "1521456730381223801",
+                  "user_name": "SHELDON.H",
+                  "password": "planban123456",
+                  "sys.files": [],
+                  "sys.user_id": "6cb99633-9445-44b8-bfb4-a34385388116",
+                  "sys.app_id": "adaa7d77-b190-46ec-8fb6-5c965f3eb835",
+                  "sys.workflow_id": "73c4ad27-9b57-4d19-9db1-31d58350da95",
+                  "sys.workflow_run_id": "4a918f0a-f70c-4f6b-a3ff-8139e329e06d"
+              }
+            }'
