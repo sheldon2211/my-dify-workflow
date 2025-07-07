@@ -1,7 +1,7 @@
 name: Run Dify Workflow Daily  # 任务名称（可自定义）
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天UTC时间0点执行（北京时间8:00）
+    - cron: '*/5 * * * *'  # 每天UTC时间0点执行（北京时间8:00）
 jobs:
   trigger-dify:
     runs-on: ubuntu-latest   # 使用免费Linux服务器
