@@ -1,17 +1,21 @@
-name: Run Dify Workflow Daily  # 任务名称（可自定义）
+name: Trigger Dify Workflow
 on:
   schedule:
-    - cron: '*/5 * * * *'  # 每天UTC时间0点执行（北京时间8:00）
+    - cron: '0 9 * * *'  # 每天上午9点执行（UTC时间=北京时间+8）
 jobs:
-  trigger-dify:
-    runs-on: ubuntu-latest   # 使用免费Linux服务器
+  run-workflow:
+    runs-on: ubuntu-latest
     steps:
-      - name: Trigger Dify Workflow
+      - name: Trigger Dify
         run: |
           curl -X POST "https://api.dify.ai/v1/workflows/run" \
             -H "Authorization: Bearer ${{ secrets.DIFY_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{
-              "workflow_id": "你的工作流ID",  # ⚠️替换为你的Dify工作流ID
-              "inputs": {"query": "每日报告"}  # 工作流所需参数（按需修改）
+              "workflow_id": "${{ secrets.WORKFLOW_ID }}",
+              "inputs": {
+                "board_id": "1521456730381223801",
+                "sys.user_id": "6cb99633-9445-44b8-bfb4-a34385388116",
+                "sys.app_id": "adaa7d77-b190-46ec-8fb6-5c965f3eb835"
+              }
             }'
